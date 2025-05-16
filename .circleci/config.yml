@@ -24,7 +24,7 @@ jobs:
           at: .
       - setup_remote_docker
       - run: |
-          docker build -t coffi23/spring-static-nginx ./nginx
+          docker build -t coffit23/spring-static-nginx ./nginx
           echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
           docker push coffit23/spring-static-nginx
 
