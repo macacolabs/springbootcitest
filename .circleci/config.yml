@@ -7,10 +7,13 @@ jobs:
     steps:
       - checkout
       - run: ./gradlew clean build
+      - run: |
+          mkdir -p nginx/static
+          cp -r build/resources/main/static/* nginx/static/
       - persist_to_workspace:
           root: .
           paths:
-            - build
+            - nginx
 
   dockerize:
     docker:
@@ -21,9 +24,9 @@ jobs:
           at: .
       - setup_remote_docker
       - run: |
-          docker build -t coffit23/spring-static-nginx ./nginx
+          docker build -t yourdockerhubid/spring-static-nginx ./nginx
           echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
-          docker push coffit23/spring-static-nginx
+          docker push yourdockerhubid/spring-static-nginx
 
 workflows:
   version: 2
